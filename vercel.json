@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/blog", "destination": "/blog.html" }
+  ],
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/blog.html", "destination": "/blog", "permanent": true },
+    { "source": "/modelo", "destination": "/", "permanent": true },
+    { "source": "/waitlist.html", "destination": "/", "permanent": true },
+    { "source": "/gracias.html", "destination": "/", "permanent": true }
+  ]
+}
