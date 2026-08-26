@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 import { useCallback } from "react";
+import { REGISTER_URL } from "@/utils/seo";
 
 type Props = {
   compact?: boolean;            // versión compacta para el footer
-  primaryHref?: string;         // por defecto /blog/funciones-de-sponsorship
-  secondaryHref?: string;       // por defecto /blog/que-es-la-beta-privada
+  primaryHref?: string;         // por defecto, registro en la app
+  secondaryHref?: string;       // por defecto, índice del blog
   title?: string;
   subtitle?: string;
 };
 
 export default function BlogCTA({
   compact = false,
-  primaryHref = "/blog/funciones-de-sponsorship",
-  secondaryHref = "/blog/que-es-la-beta-privada",
-  title = "Conocé Sponsorship a fondo.",
-  subtitle = "Qué testeamos, cómo seleccionamos y qué se viene.",
+  primaryHref = REGISTER_URL,
+  secondaryHref = "/blog",
+  title = "Empezá tu primera campaña.",
+  subtitle = "Negociá, firmá el contrato y cobrá por Mercado Pago. Comisión del 5%, todo en pesos.",
 }: Props) {
   const pushClick = useCallback((label: string) => {
     try {
@@ -38,23 +39,22 @@ export default function BlogCTA({
         </div>
 
         <div className="blogcta__actions">
-          <Link
+          <a
             href={primaryHref}
             className="btn blogcta__primary"
             onClick={() => pushClick("primary")}
-            prefetch
           >
-            Conocé la Beta por dentro
-          </Link>
+            Crear mi perfil
+          </a>
 
           <Link
             href={secondaryHref}
             className="btn-quiet blogcta__secondary"
             onClick={() => pushClick("secondary")}
             prefetch
-            aria-label="Leer cómo funciona la beta privada"
+            aria-label="Ver todos los artículos del blog"
           >
-            Cómo funciona el Beta
+            Ver todos los artículos
           </Link>
         </div>
       </div>
