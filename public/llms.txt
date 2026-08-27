@@ -22,8 +22,11 @@
 - Dos modalidades: **pago total** (el contrato se desbloquea al pagar el 100%)
   y **pago por publicación** (el cobro de cada entrega se genera recién cuando
   esa publicación fue confirmada por ambas partes).
-- La comisión de plataforma y el costo de procesamiento de Mercado Pago son
-  conceptos separados; ambos se muestran antes de confirmar el pago.
+- La comisión de plataforma es del **5%** sobre el monto de la campaña.
+  Cuando existan planes, ese porcentaje va a depender del plan contratado.
+- El costo de procesamiento de Mercado Pago es un concepto separado de esa
+  comisión y varía según la velocidad de acreditación. Ambos se muestran
+  antes de confirmar el pago.
 
 ## Links principales
 
