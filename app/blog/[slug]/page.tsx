@@ -5,9 +5,20 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getAllPostsMeta, getAllSlugs, getPostBySlug } from "@/utils/mdx";
+import {
+  getAllSlugs,
+  getPostBySlug,
+  getRelated,
+  PILLAR_LABELS,
+} from "@/utils/mdx";
 import { absUrl } from "@/utils/seo";
-import BlogCTA from "@/components/cta/BlogCTA";
+import Breadcrumbs from "@/components/blog/Breadcrumbs";
+import TldrBox from "@/components/blog/TldrBox";
+import DatoClave from "@/components/blog/DatoClave";
+import PostFaq from "@/components/blog/PostFaq";
+import CitationBox from "@/components/blog/CitationBox";
+import ShareButtons from "@/components/blog/ShareButtons";
+import BlogCTA from "@/components/blog/BlogCTA";
 
 export const dynamicParams = false;
 
@@ -24,7 +35,7 @@ export function generateMetadata({
   if (!post) return {};
 
   const title = post.ogTitle || post.title;
-  const description = post.ogDescription || post.excerpt;
+  const description = post.ogDescription || post.tldr || post.excerpt;
 
   return {
     title,
@@ -46,29 +57,31 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
-  const related = getAllPostsMeta()
-    .filter((p) => p.slug !== post.slug && p.category === post.category)
-    .slice(0, 3);
-  const fallbackRelated =
-    related.length > 0
-      ? related
-      : getAllPostsMeta()
-          .filter((p) => p.slug !== post.slug)
-          .slice(0, 3);
+  const related = getRelated(post.slug, 3);
+  const absolute = absUrl(post.url);
+  const year = (post.updated || post.date || "").slice(0, 4) || "2026";
+  const pillarLabel = post.pillar ? PILLAR_LABELS[post.pillar] : post.category;
 
   const graph: Record<string, unknown>[] = [
     {
       "@type": "BlogPosting",
       headline: post.title,
-      description: post.excerpt,
+      description: post.tldr || post.excerpt,
       datePublished: post.date || undefined,
       dateModified: post.updated || post.date || undefined,
-      author: { "@type": "Organization", name: post.author || "Sponsorship" },
-      mainEntityOfPage: absUrl(post.url),
+      author: { "@type": "Organization", name: post.author || "Equipo Sponsorship" },
+      publisher: {
+        "@type": "Organization",
+        name: "Sponsorship",
+        url: absUrl("/"),
+      },
+      mainEntityOfPage: absolute,
+      articleSection: pillarLabel,
       inLanguage: "es-AR",
     },
   ];
 
+  // El FAQPage sólo se declara si las preguntas se renderizan en pantalla.
   if (post.faq && post.faq.length > 0) {
     graph.push({
       "@type": "FAQPage",
@@ -90,16 +103,36 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      <Breadcrumbs
+        items={[
+          { name: "Inicio", href: "/" },
+          { name: "Blog", href: "/blog" },
+          ...(post.pillar
+            ? [{ name: pillarLabel, href: `/blog/pilar/${post.pillar}` }]
+            : []),
+          { name: post.title },
+        ]}
+      />
+
       <header className="section-head">
         <p className="eyebrow">
-          <Link href={`/blog/categoria/${encodeURIComponent(post.category)}`}>
-            {post.category}
-          </Link>{" "}
+          {post.pillar ? (
+            <Link href={`/blog/pilar/${post.pillar}`}>{pillarLabel}</Link>
+          ) : (
+            <Link href={`/blog/categoria/${encodeURIComponent(post.category)}`}>
+              {post.category}
+            </Link>
+          )}{" "}
           · {post.readingTime}
         </p>
         <h1 className="title">{post.title}</h1>
-        {post.excerpt && <p className="subtitle">{post.excerpt}</p>}
+        <p className="post-byline muted">
+          Por {post.author || "Equipo Sponsorship"}
+          {post.updated ? ` · Actualizado ${post.updated}` : ""}
+        </p>
       </header>
+
+      {post.tldr && <TldrBox text={post.tldr} />}
 
       <article className="prose">
         <MDXRemote
@@ -113,21 +146,13 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         />
       </article>
 
-      {post.faq && post.faq.length > 0 && (
-        <section aria-labelledby="post-faq-title" style={{ marginTop: 40, maxWidth: "72ch", marginInline: "auto" }}>
-          <h2 id="post-faq-title" className="title" style={{ fontSize: 24 }}>
-            Preguntas frecuentes
-          </h2>
-          <div className="accordion" style={{ marginTop: 16 }}>
-            {post.faq.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      )}
+      {post.datoClave && <DatoClave text={post.datoClave} />}
+
+      {post.faq && post.faq.length > 0 && <PostFaq items={post.faq} />}
+
+      <CitationBox title={post.title} url={absolute} year={year} />
+
+      <ShareButtons title={post.title} url={absolute} />
 
       {post.tags?.length > 0 && (
         <div className="chips" style={{ marginTop: 24 }}>
@@ -139,22 +164,18 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         </div>
       )}
 
-      <p style={{ marginTop: 24 }}>
-        <Link className="btn-quiet" href="/blog">
-          ← Volver al blog
-        </Link>
-      </p>
-
-      {fallbackRelated.length > 0 && (
+      {related.length > 0 && (
         <section aria-labelledby="related-title" style={{ marginTop: 44 }}>
           <h2 id="related-title" className="eyebrow" style={{ marginBottom: 14 }}>
-            Seguí leyendo
+            Seguí leyendo{post.pillar ? ` · ${pillarLabel}` : ""}
           </h2>
           <div className="grid three">
-            {fallbackRelated.map((p) => (
+            {related.map((p) => (
               <article key={p.slug} className="feature">
                 <h3 style={{ margin: "6px 0 6px" }}>
-                  <Link href={p.url} prefetch>{p.title}</Link>
+                  <Link href={p.url} prefetch>
+                    {p.title}
+                  </Link>
                 </h3>
                 <p className="muted">{p.excerpt}</p>
               </article>
@@ -163,7 +184,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         </section>
       )}
 
-      <BlogCTA />
+      <BlogCTA pillar={post.pillar} text={post.ctaText} />
     </main>
   );
 }

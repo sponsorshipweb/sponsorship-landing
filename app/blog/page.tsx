@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { getAllPostsMeta } from "@/utils/mdx";
+import { getAllPostsMeta, getAllPillars, PILLAR_LABELS } from "@/utils/mdx";
 import { absUrl } from "@/utils/seo";
-import BlogCTA from "@/components/cta/BlogCTA";
+import BlogCTA from "@/components/blog/BlogCTA";
 
 export const dynamic = "force-static";
 
@@ -36,6 +36,7 @@ export default async function BlogIndex({
   const start = (page - 1) * PAGE_SIZE;
   const pageItems = filtered.slice(start, start + PAGE_SIZE);
 
+  const pillars = getAllPillars();
   const categories = uniq(posts.map((p) => p.category)).sort();
   const tags = uniq(posts.flatMap((p) => p.tags || [])).sort();
 
@@ -46,6 +47,19 @@ export default async function BlogIndex({
         <h1 id="blog-title" className="title">Aprendé, validá y escalá con Sponsorship</h1>
         <p className="subtitle">Guías, metodología y actualizaciones reales del producto.</p>
       </header>
+
+      {/* Pilares: la navegación principal del blog */}
+      {pillars.length > 0 && (
+        <nav aria-label="Pilares de contenido" style={{ margin: "0 0 26px" }}>
+          <div className="chips">
+            {pillars.map((p) => (
+              <Link key={p} className="chip" href={`/blog/pilar/${p}`} prefetch>
+                {PILLAR_LABELS[p]}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      )}
 
       {/* Featured */}
       {featured.length > 0 && (
@@ -75,22 +89,13 @@ export default async function BlogIndex({
         />
       </form>
 
-      {/* Filtros rápidos */}
-      <div className="grid two" style={{ margin: "8px 0 18px" }} aria-label="Filtros de blog">
-        <div className="chips">
-          {categories.map((c) => (
-            <Link key={c} className="chip" href={`/blog/categoria/${encodeURIComponent(c)}`} prefetch>
-              {c}
-            </Link>
-          ))}
-        </div>
-        <div className="chips" style={{ justifyContent: "flex-end" }}>
-          {tags.map((t) => (
-            <Link key={t} className="chip" href={`/blog/tag/${encodeURIComponent(t)}`} prefetch>
-              #{t}
-            </Link>
-          ))}
-        </div>
+      {/* Tags */}
+      <div className="chips" style={{ margin: "8px 0 18px" }} aria-label="Filtrar por tag">
+        {tags.map((t) => (
+          <Link key={t} className="chip" href={`/blog/tag/${encodeURIComponent(t)}`} prefetch>
+            #{t}
+          </Link>
+        ))}
       </div>
 
       {/* Listado paginado */}

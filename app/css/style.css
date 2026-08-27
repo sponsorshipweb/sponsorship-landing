@@ -634,3 +634,109 @@ input:invalid:focus,select:invalid:focus{ border-color:var(--error); box-shadow:
 .prose tr:nth-child(even) td{
   background: rgba(255,255,255,.02);
 }
+
+/* ============================================================
+   Componentes del blog (estándar SEO/GEO)
+   ============================================================ */
+
+/* Migas */
+.breadcrumbs{ margin: 0 0 18px; }
+.breadcrumbs ol{
+  display: flex; flex-wrap: wrap; gap: 6px;
+  list-style: none; margin: 0; padding: 0;
+  font-size: 13px; color: var(--muted);
+}
+.breadcrumbs li + li::before{ content: "/"; margin-right: 6px; opacity: .5; }
+.breadcrumbs a{ color: var(--muted); text-decoration: none; }
+.breadcrumbs a:hover{ color: var(--accent-300); }
+.breadcrumbs [aria-current="page"]{
+  color: var(--fg);
+  max-width: 46ch; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Byline */
+.post-byline{ font-size: 14px; margin-top: 10px; }
+
+/* TL;DR */
+.tldr{
+  max-width: 72ch; margin: 26px auto 0;
+  background: linear-gradient(180deg, rgba(255,199,0,.07), rgba(255,199,0,.02));
+  border: 1px solid rgba(255,199,0,.28);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px; padding: 18px 20px;
+}
+.tldr-label{
+  margin: 0 0 6px; font-size: 12px; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--accent-300);
+}
+.tldr-text{ margin: 0; color: var(--fg); line-height: 1.65; }
+
+/* Dato clave */
+.dato-clave{
+  max-width: 72ch; margin: 30px auto;
+  background: var(--panel-elt);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-300);
+  border-radius: 10px; padding: 18px 20px;
+}
+.dato-clave-label{
+  margin: 0 0 6px; font-size: 12px; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--accent-300);
+}
+.dato-clave-text{ margin: 0; color: var(--fg); line-height: 1.65; }
+
+/* FAQ del artículo */
+.post-faq{ max-width: 72ch; margin: 44px auto 0; }
+.post-faq-title{ font-size: clamp(20px, 2.4vw, 24px); font-weight: 800; margin: 0 0 16px; }
+
+/* Cómo citar */
+.citation{
+  max-width: 72ch; margin: 40px auto 0;
+  background: var(--panel-elt);
+  border: 1px solid var(--line);
+  border-radius: 10px; padding: 18px 20px;
+}
+.citation-head{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 10px;
+}
+.citation-title{ font-size: 15px; font-weight: 700; margin: 0; }
+.citation-text{
+  margin: 0; font-size: 14px; line-height: 1.6;
+  color: var(--muted); word-break: break-word;
+}
+.btn-copy{
+  flex: none; cursor: pointer;
+  background: transparent; color: var(--accent-300);
+  border: 1px solid rgba(255,199,0,.35); border-radius: 999px;
+  padding: 5px 14px; font-size: 13px; font-weight: 600;
+  transition: background .18s, border-color .18s;
+}
+.btn-copy:hover{ background: rgba(255,199,0,.1); border-color: var(--accent); }
+
+/* Compartir */
+.share{
+  max-width: 72ch; margin: 22px auto 0;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+}
+.share-label{
+  font-size: 12px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted); margin-right: 4px;
+}
+.share-btn{
+  cursor: pointer; text-decoration: none;
+  background: var(--panel-elt); color: var(--fg);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 15px; font-size: 13px; font-weight: 600;
+  transition: transform .18s, border-color .18s, color .18s;
+}
+.share-btn:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,199,0,.4); color: var(--accent-300);
+}
+
+/* CTA del blog */
+.cta-actions{
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+}

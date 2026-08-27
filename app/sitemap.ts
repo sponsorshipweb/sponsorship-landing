@@ -1,16 +1,20 @@
 import type { MetadataRoute } from "next";
-import { getAllPostsMeta } from "@/utils/mdx";
+import { getAllPostsMeta, getAllPillars } from "@/utils/mdx";
 import { SITE_URL } from "@/utils/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
-    "",
-    "/blog",
-  ].map((p) => ({
+  const staticRoutes = ["", "/blog"].map((p) => ({
     url: `${SITE_URL}${p}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.7,
+  }));
+
+  const pillars = getAllPillars().map((p) => ({
+    url: `${SITE_URL}/blog/pilar/${p}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
   }));
 
   const posts = getAllPostsMeta().map((p) => ({
@@ -20,5 +24,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...posts];
+  return [...staticRoutes, ...pillars, ...posts];
 }

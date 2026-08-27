@@ -1,0 +1,41 @@
+# Sponsorship
+
+> Marketplace argentino que conecta marcas con influencers, figuras públicas y
+> creadores UGC. Da la infraestructura para negociar, contratar y cobrar una
+> campaña de publicidad; no representa comercialmente a ninguna de las partes.
+> Filosofía del producto: "tu agencia sos vos".
+
+## Tipos de usuario
+
+- **Marca (Sponsor):** publica campañas, explora perfiles y contrata creadores.
+- **Influencer:** aporta audiencia propia en redes; publica en su propio perfil.
+- **Figura pública:** deportistas, periodistas, músicos, actores. Su relevancia
+  existe más allá de las redes sociales.
+- **Creador UGC:** produce contenido para que la marca lo publique en sus
+  propios canales. No necesita audiencia propia.
+
+## Cómo funciona el cobro
+
+- Medio de pago único: **Mercado Pago**, en pesos argentinos.
+- El dinero va directo de quien paga a quien cobra. La plataforma no retiene
+  fondos en ningún momento.
+- Dos modalidades: **pago total** (el contrato se desbloquea al pagar el 100%)
+  y **pago por publicación** (el cobro de cada entrega se genera recién cuando
+  esa publicación fue confirmada por ambas partes).
+- La comisión de plataforma y el costo de procesamiento de Mercado Pago son
+  conceptos separados; ambos se muestran antes de confirmar el pago.
+
+## Links principales
+
+- Producto: https://www.sponsorship.com.ar
+- Registro: https://www.sponsorship.com.ar/auth/register
+- Blog: /blog
+
+## Pilares del blog
+
+- Para Marcas: /blog/pilar/marcas
+- Para Influencers: /blog/pilar/influencers
+- Para Figuras Públicas: /blog/pilar/figuras-publicas
+- Para Creadores UGC: /blog/pilar/ugc
+- Pagos y Seguridad: /blog/pilar/pagos-seguridad
+- Producto y Comparativas: /blog/pilar/producto-comparativas
