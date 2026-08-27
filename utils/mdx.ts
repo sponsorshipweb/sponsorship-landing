@@ -6,6 +6,32 @@ const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
 export type PostFaq = { q: string; a: string };
 
+/** Los 6 pilares de contenido del blog. */
+export const PILLARS = [
+  "marcas",
+  "influencers",
+  "figuras-publicas",
+  "ugc",
+  "pagos-seguridad",
+  "producto-comparativas",
+] as const;
+
+export type Pillar = (typeof PILLARS)[number];
+
+/** Etiqueta legible de cada pilar, para breadcrumbs y encabezados. */
+export const PILLAR_LABELS: Record<Pillar, string> = {
+  marcas: "Para Marcas",
+  influencers: "Para Influencers",
+  "figuras-publicas": "Para Figuras Públicas",
+  ugc: "Para Creadores UGC",
+  "pagos-seguridad": "Pagos y Seguridad",
+  "producto-comparativas": "Producto y Comparativas",
+};
+
+function isPillar(v: unknown): v is Pillar {
+  return typeof v === "string" && (PILLARS as readonly string[]).includes(v);
+}
+
 export type PostMeta = {
   slug: string;
   url: string;
@@ -24,6 +50,16 @@ export type PostMeta = {
   faq?: PostFaq[];
   featured?: boolean;
   readingTime: string;
+  /** Pilar de contenido; agrupa artículos relacionados. */
+  pillar?: Pillar;
+  /** Resumen de 2-3 líneas mostrado arriba del artículo. */
+  tldr?: string;
+  /** Dato citable, destacado en un recuadro propio. */
+  datoClave?: string;
+  /** Texto del CTA contextual al pie del artículo. */
+  ctaText?: string;
+  /** Minutos de lectura declarados en el frontmatter (pisan el cálculo automático). */
+  readingTimeMinutes?: number;
 };
 
 export type Post = PostMeta & { content: string };
@@ -61,7 +97,16 @@ function parseFile(file: string): Post {
     ogDescription: data.ogDescription ? String(data.ogDescription) : undefined,
     faq: Array.isArray(data.faq) ? (data.faq as PostFaq[]) : undefined,
     featured: Boolean(data.featured),
-    readingTime: readingTimeOf(content),
+    pillar: isPillar(data.pillar) ? data.pillar : undefined,
+    tldr: data.tldr ? String(data.tldr) : undefined,
+    datoClave: data.datoClave ? String(data.datoClave) : undefined,
+    ctaText: data.ctaText ? String(data.ctaText) : undefined,
+    readingTimeMinutes: Number.isFinite(Number(data.readingTimeMinutes))
+      ? Number(data.readingTimeMinutes)
+      : undefined,
+    readingTime: data.readingTimeMinutes
+      ? `${Number(data.readingTimeMinutes)} min de lectura`
+      : readingTimeOf(content),
     content,
   };
 }
@@ -105,4 +150,37 @@ export function getAllCategories(): string[] {
 
 export function getAllTags(): string[] {
   return Array.from(new Set(getAllPostsMeta().flatMap((p) => p.tags || []))).sort();
+}
+
+export function getByPillar(pillar: string): PostMeta[] {
+  const target = decodeURIComponent(pillar).toLowerCase();
+  return getAllPostsMeta().filter((p) => p.pillar === target);
+}
+
+/**
+ * Otros artículos del mismo pilar, para el bloque de relacionados.
+ * Si el pilar tiene pocos, completa con los más recientes de otros pilares.
+ */
+export function getRelated(slug: string, limit = 3): PostMeta[] {
+  const all = getAllPostsMeta();
+  const post = all.find((p) => p.slug === slug);
+  if (!post) return [];
+
+  const samePillar = all.filter(
+    (p) => p.slug !== slug && p.pillar && p.pillar === post.pillar
+  );
+  if (samePillar.length >= limit) return samePillar.slice(0, limit);
+
+  const chosen = new Set(samePillar.map((p) => p.slug));
+  const filler = all.filter((p) => p.slug !== slug && !chosen.has(p.slug));
+  return [...samePillar, ...filler].slice(0, limit);
+}
+
+export function getAllPillars(): Pillar[] {
+  const used = new Set(
+    getAllPostsMeta()
+      .map((p) => p.pillar)
+      .filter((p): p is Pillar => Boolean(p))
+  );
+  return PILLARS.filter((p) => used.has(p));
 }
