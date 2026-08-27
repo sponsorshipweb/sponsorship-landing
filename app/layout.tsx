@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Link href="/#faq">Preguntas</Link>
               <Link href="/blog">Blog</Link>
               <a className="btn" href={REGISTER_URL}>
-                Crear mi perfil
+                Crear cuenta
               </a>
             </nav>
           </div>

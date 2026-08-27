@@ -10,47 +10,79 @@ export const metadata: Metadata = {
 /**
  * Fuente única del FAQ: de acá salen tanto el acordeón visible como el
  * schema FAQPage, así el texto no puede desincronizarse (requisito de GEO).
+ *
+ * `more` es sólo visual: amplía la respuesta con un artículo del blog sin
+ * entrar en el JSON-LD, para que lo marcado siga siendo exactamente lo que
+ * se lee en pantalla.
  */
-const FAQ: { q: string; a: string }[] = [
+const FAQ: { q: string; a: string; more?: { label: string; href: string } }[] = [
   {
     q: "¿Qué es Sponsorship?",
-    a: "Una plataforma argentina que conecta marcas con creadores de contenido, influencers, figuras públicas y páginas de redes sociales para gestionar campañas de publicidad de punta a punta: descubrimiento, negociación, contrato y pago.",
+    a: "Una plataforma argentina que conecta marcas con influencers, figuras públicas y creadores de contenido UGC para gestionar campañas de publicidad de punta a punta: descubrimiento, negociación, contrato y pago por Mercado Pago.",
+    more: { label: "Cómo empezar, paso a paso", href: "/blog/como-empezar-en-sponsorship" },
   },
   {
-    q: "¿Sponsorship es gratis?",
-    a: "Usarla no tiene costo de suscripción por ahora. Se cobra una comisión del 5% sobre el monto de cada campaña, que se muestra antes de confirmar el pago.",
+    q: "¿Cuánto cuesta usar Sponsorship?",
+    a: "Crear la cuenta y usar la plataforma no tiene costo de suscripción por ahora. Se cobra una comisión del 5% sobre el monto de cada campaña. Aparte de eso, Mercado Pago aplica su propio costo de procesamiento, que varía según la velocidad de acreditación. Los dos conceptos se muestran antes de confirmar el pago.",
+    more: {
+      label: "El detalle de las dos comisiones",
+      href: "/blog/comisiones-en-marketing-de-influencers-argentina",
+    },
   },
   {
-    q: "¿Cómo cobran los creadores?",
-    a: "Vinculan su cuenta de Mercado Pago una vez. Cada pago aprobado se acredita directo ahí — Sponsorship no administra ni retiene el dinero.",
+    q: "¿Sponsorship retiene mi dinero?",
+    a: "No. El pago va directo de la cuenta de Mercado Pago de quien paga a la de quien cobra. La plataforma no administra ni retiene esos fondos en ningún momento: no hay una cuenta intermedia donde la plata espere.",
   },
   {
-    q: "¿Sponsorship funciona como un escrow que retiene mi plata?",
-    a: "No. El dinero va directo de quien paga a la cuenta de Mercado Pago de quien cobra. En pago por publicación, el cobro se dispara cuando ambas partes aprueban el contenido.",
+    q: "¿Cómo y cuándo cobra un creador?",
+    a: "Vinculás tu cuenta de Mercado Pago una sola vez. Si la campaña es de pago único, cobrás el 100% al aceptar el contrato. Si es de pago por publicación, cobrás automáticamente cuando la marca aprueba cada entrega. Los tiempos de acreditación son los que aplique Mercado Pago a tu cuenta.",
+    more: {
+      label: "Cómo cobrar con Mercado Pago",
+      href: "/blog/como-cobrar-campanas-con-mercado-pago",
+    },
   },
   {
-    q: "¿Qué comisión cobra Sponsorship?",
-    a: "5% sobre el monto de la campaña, siempre en pesos argentinos.",
+    q: "¿Qué pasa si la otra parte no cumple?",
+    a: "El orden de los pasos es la protección: en pago por publicación, el cobro de cada entrega se genera recién cuando esa publicación fue confirmada, y no se avanza con entregas nuevas si quedó una confirmada sin pagar. Todo lo acordado queda registrado en el contrato, no en un chat que se puede borrar.",
+    more: { label: "Qué pasa si una marca no paga", href: "/blog/que-pasa-si-una-marca-no-paga" },
+  },
+  {
+    q: "¿Necesito tener muchos seguidores para registrarme?",
+    a: "No. Los creadores UGC producen contenido para que la marca lo publique en sus propios canales, así que no necesitan audiencia propia. Y para influencers, el match con el rubro de la marca suele pesar más que el número bruto de seguidores.",
+    more: { label: "Qué es el contenido UGC", href: "/blog/que-es-el-contenido-ugc" },
   },
   {
     q: "¿Necesito tener Mercado Pago?",
-    a: "Sí, hoy es el único medio de pago dentro de la plataforma, tanto para pagar como para cobrar.",
-  },
-  {
-    q: "¿Sponsorship reemplaza a mi agencia o representante?",
-    a: "No. Da la infraestructura para negociar, contratar y cobrar — cada usuario decide con quién trabaja y en qué condiciones.",
-  },
-  {
-    q: "¿Qué tipo de creadores hay en la plataforma?",
-    a: "Influencers, figuras públicas, páginas de redes sociales y creadores de contenido UGC.",
+    a: "Sí, hoy es el único medio de pago dentro de la plataforma, tanto para pagar como para cobrar. Todos los contratos se pactan y se cobran en pesos argentinos.",
   },
   {
     q: "¿Cómo sé si un creador o una marca cumple lo pactado?",
-    a: "Cada perfil tiene una reputación pública con calificaciones de campañas anteriores, visible antes de negociar.",
+    a: "Cada perfil tiene una reputación pública construida con las calificaciones de campañas anteriores, visible antes de empezar a negociar. Al cerrar cada campaña, ambas partes se califican.",
+    more: {
+      label: "Cómo se construye una reputación verificable",
+      href: "/blog/como-construir-reputacion-verificable-como-creador",
+    },
+  },
+  {
+    q: "¿Qué tipo de creadores hay en la plataforma?",
+    a: "Influencers, figuras públicas —deportistas, periodistas, músicos, actores—, páginas de redes sociales y creadores de contenido UGC. Cada uno es una categoría propia, con su tipo de campaña y su forma de cotizar.",
+    more: {
+      label: "UGC vs. influencer marketing",
+      href: "/blog/ugc-vs-influencer-marketing",
+    },
+  },
+  {
+    q: "¿Sponsorship reemplaza a mi agencia o representante?",
+    a: "No necesariamente. Da la infraestructura para negociar, contratar y cobrar de forma directa, pero nunca negocia en nombre de nadie. Podés gestionar algunos acuerdos por tu cuenta y otros a través de tu agencia.",
+    more: {
+      label: "Sponsorship vs. una agencia de influencers",
+      href: "/blog/sponsorship-vs-agencia-de-influencers",
+    },
   },
   {
     q: "¿Hay planes pagos?",
-    a: "Por ahora usar Sponsorship no tiene costo de suscripción. Estamos preparando planes con herramientas adicionales — próximamente.",
+    a: "Por ahora no: usar la plataforma no tiene costo de suscripción. Estamos preparando planes con herramientas adicionales, y cuando existan el porcentaje de comisión va a depender del plan contratado. Se van a anunciar en el blog antes de activarse.",
+    more: { label: "Qué se viene en el roadmap", href: "/blog/roadmap-lanzamientos" },
   },
   {
     q: "¿Funciona fuera de Argentina?",
@@ -114,20 +146,20 @@ export default function Home() {
       {/* ---------- 1. HERO ---------- */}
       <section className="section" aria-labelledby="hero-title">
         <div className="section-head">
-          <p className="eyebrow">Ya disponible</p>
+          <p className="eyebrow">Ya disponible en Argentina</p>
           <h1 id="hero-title" className="title">
-            Formalizá campañas con creadores.{" "}
-            <span className="gold">Cobrá por Mercado Pago.</span> Sin WhatsApp
-            perdido ni Excel.
+            Cerrá campañas con contrato.{" "}
+            <span className="gold">Cobrá por Mercado Pago.</span>
           </h1>
           <p className="subtitle">
-            Sponsorship conecta marcas y creadores de contenido en Argentina para
-            negociar, contratar y cobrar campañas de publicidad en un solo lugar.
+            El acuerdo deja de vivir en un chat: negociás con contraofertas,
+            firmás un contrato con lo pactado y el pago se libera cuando la
+            entrega está aprobada.
           </p>
 
           <div className="row" style={{ marginTop: 18 }}>
             <a className="btn btn-lg" href={REGISTER_URL}>
-              Crear mi perfil
+              Crear mi cuenta gratis
             </a>
             <Link className="btn-quiet" href="#como-funciona">
               Ver cómo funciona
@@ -139,16 +171,22 @@ export default function Home() {
 
         <div className="grid three fade-in" style={{ marginTop: 24 }}>
           <article className="card stat">
+            <span className="stat-value">$0</span>
+            <span className="stat-label">
+              Crear tu cuenta y usar la plataforma no tiene costo de suscripción.
+            </span>
+          </article>
+          <article className="card stat">
             <span className="stat-value">5%</span>
-            <span className="stat-label">De comisión, visible antes de confirmar el pago.</span>
+            <span className="stat-label">
+              De comisión sobre la campaña, visible antes de confirmar el pago.
+            </span>
           </article>
           <article className="card stat">
-            <span className="stat-value">ARS</span>
-            <span className="stat-label">Todo en pesos argentinos, vía Mercado Pago.</span>
-          </article>
-          <article className="card stat">
-            <span className="stat-value">0</span>
-            <span className="stat-label">Sponsorship no retiene tu dinero en ningún momento.</span>
+            <span className="stat-value is-word">Directo</span>
+            <span className="stat-label">
+              El pago va de una cuenta de Mercado Pago a la otra, en pesos.
+            </span>
           </article>
         </div>
       </section>
@@ -184,6 +222,12 @@ export default function Home() {
             </li>
           </ol>
         </div>
+
+        <p className="muted" style={{ marginTop: 18 }}>
+          <Link href="/blog/como-usar-sponsorship">
+            Ver el flujo completo, paso a paso →
+          </Link>
+        </p>
       </section>
 
       {/* ---------- 3 + 4. MARCAS / CREADORES ---------- */}
@@ -209,7 +253,10 @@ export default function Home() {
               <li>Elegís pagar todo junto o por cada publicación aprobada.</li>
             </ul>
             <p style={{ marginTop: 16 }}>
-              <a className="btn" href={REGISTER_URL}>Crear mi perfil</a>
+              <a className="btn" href={REGISTER_URL}>Crear cuenta de marca</a>
+            </p>
+            <p className="tiny muted" style={{ marginTop: 10 }}>
+              <Link href="/blog/pilar/marcas">Guías para marcas →</Link>
             </p>
           </article>
 
@@ -225,7 +272,10 @@ export default function Home() {
               <li>Construís una reputación pública con cada campaña finalizada.</li>
             </ul>
             <p style={{ marginTop: 16 }}>
-              <a className="btn" href={REGISTER_URL}>Crear mi perfil</a>
+              <a className="btn" href={REGISTER_URL}>Crear cuenta de creador</a>
+            </p>
+            <p className="tiny muted" style={{ marginTop: 10 }}>
+              <Link href="/blog/pilar/influencers">Guías para creadores →</Link>
             </p>
           </article>
         </div>
@@ -237,12 +287,10 @@ export default function Home() {
           <p className="eyebrow">Pagos y transparencia</p>
           <h2 id="pay-title" className="title">¿Cómo funciona el pago?</h2>
           <p className="subtitle">
-            Sponsorship usa Mercado Pago para todos los cobros, en pesos argentinos.
-            Antes de pagar, ves con claridad cuánto es la comisión de la plataforma
-            (5%) y cuánto recibe el creador — sin sorpresas. En campañas con pago por
-            publicación, el cobro se dispara automáticamente recién cuando la marca
-            aprueba lo publicado. Sponsorship no retiene tu dinero en ningún momento:
-            va directo a la cuenta de Mercado Pago de quien cobra.
+            Todos los cobros salen por Mercado Pago, en pesos argentinos. Antes de
+            confirmar vas a ver la comisión de la plataforma y el neto que recibe el
+            creador. Sponsorship no retiene ese dinero en ningún momento: va directo
+            de una cuenta a la otra.
           </p>
         </div>
 
@@ -265,8 +313,8 @@ export default function Home() {
           <article className="card">
             <h3>Comisión del 5%</h3>
             <p className="muted">
-              Se muestra en vivo antes de confirmar, junto con el neto que recibe el
-              creador. Siempre en pesos argentinos.
+              Se muestra en vivo antes de confirmar, junto con el costo de
+              procesamiento de Mercado Pago y el neto que recibe el creador.
             </p>
           </article>
         </div>
@@ -325,12 +373,61 @@ export default function Home() {
             <details key={f.q}>
               <summary>{f.q}</summary>
               <p>{f.a}</p>
+              {f.more && (
+                <p className="faq-more">
+                  <Link href={f.more.href}>{f.more.label} →</Link>
+                </p>
+              )}
             </details>
           ))}
         </div>
       </section>
 
-      {/* ---------- 9. CTA FINAL ---------- */}
+      {/* ---------- 9. SEGUIR APRENDIENDO ---------- */}
+      <section className="section" id="novedades" aria-labelledby="learn-title">
+        <div className="section-head">
+          <p className="eyebrow">Novedades y guías</p>
+          <h2 id="learn-title" className="title">
+            ¿Querés entender el proyecto antes de crear tu cuenta?
+          </h2>
+          <p className="subtitle">
+            Publicamos todo en el blog: cómo funciona cada parte del producto, qué
+            estamos construyendo y guías concretas para los dos lados de una campaña.
+          </p>
+        </div>
+
+        <div className="grid three">
+          <article className="feature">
+            <h3>
+              <Link href="/blog/como-empezar-en-sponsorship">Cómo empezar</Link>
+            </h3>
+            <p className="muted">
+              Qué necesitás para crear la cuenta, vincular Mercado Pago y cerrar tu
+              primera campaña.
+            </p>
+          </article>
+          <article className="feature">
+            <h3>
+              <Link href="/blog/roadmap-lanzamientos">Qué se viene</Link>
+            </h3>
+            <p className="muted">
+              El roadmap público: qué funciona hoy, qué estamos construyendo y cómo
+              priorizamos.
+            </p>
+          </article>
+          <article className="feature">
+            <h3>
+              <Link href="/blog">Todas las guías</Link>
+            </h3>
+            <p className="muted">
+              Para marcas, influencers, figuras públicas y creadores UGC, más pagos,
+              contratos y comparativas.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      {/* ---------- 10. CTA FINAL ---------- */}
       <section className="section">
         <div className="cta-band">
           <h2 className="title">Empezá tu primera campaña hoy</h2>
@@ -340,7 +437,7 @@ export default function Home() {
           </p>
           <div className="actions">
             <a className="btn btn-lg" href={REGISTER_URL}>
-              Crear mi perfil
+              Crear mi cuenta gratis
             </a>
           </div>
         </div>

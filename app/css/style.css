@@ -740,3 +740,24 @@ input:invalid:focus,select:invalid:focus{ border-color:var(--error); box-shadow:
 .cta-actions{
   display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
 }
+
+/* Link de "leer más" dentro de una respuesta del FAQ.
+   Va en su propio párrafo para no mezclarse con el texto que declara el schema. */
+.accordion details p.faq-more{
+  padding: 0 16px 14px;
+  margin: -4px 0 0;
+  font-size: 14px;
+}
+.accordion details p.faq-more a{
+  color: var(--accent-300);
+  text-decoration: none;
+  font-weight: 600;
+}
+.accordion details p.faq-more a:hover{ text-decoration: underline; }
+
+/* Cuando el dato destacado es una palabra y no un número, baja un escalón:
+   a 40px "Directo" se lee como título y le compite el impacto a $0 y 5%. */
+.card.stat .stat-value.is-word{
+  font-size: clamp(22px, 2.6vw, 28px);
+  letter-spacing: -.01em;
+}
