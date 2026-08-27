@@ -137,18 +137,18 @@ export default function Home() {
           <UserCounter />
         </div>
 
-        <div className="grid three" style={{ marginTop: 24 }}>
-          <article className="card">
-            <h3 className="title gold" style={{ fontSize: 28, margin: 0 }}>5%</h3>
-            <p className="muted">De comisión, visible antes de confirmar el pago.</p>
+        <div className="grid three fade-in" style={{ marginTop: 24 }}>
+          <article className="card stat">
+            <span className="stat-value">5%</span>
+            <span className="stat-label">De comisión, visible antes de confirmar el pago.</span>
           </article>
-          <article className="card">
-            <h3 className="title gold" style={{ fontSize: 28, margin: 0 }}>ARS</h3>
-            <p className="muted">Todo en pesos argentinos, vía Mercado Pago.</p>
+          <article className="card stat">
+            <span className="stat-value">ARS</span>
+            <span className="stat-label">Todo en pesos argentinos, vía Mercado Pago.</span>
           </article>
-          <article className="card">
-            <h3 className="title gold" style={{ fontSize: 28, margin: 0 }}>0</h3>
-            <p className="muted">Sponsorship no retiene tu dinero en ningún momento.</p>
+          <article className="card stat">
+            <span className="stat-value">0</span>
+            <span className="stat-label">Sponsorship no retiene tu dinero en ningún momento.</span>
           </article>
         </div>
       </section>
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* ---------- 3 + 4. MARCAS / CREADORES ---------- */}
-      <section className="section" aria-labelledby="aud-title">
+      <section className="section section-tint" aria-labelledby="aud-title">
         <div className="section-head">
           <h2 id="aud-title" className="title">Dos lados, la misma infraestructura</h2>
           <p className="subtitle">
@@ -273,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* ---------- 7. REPUTACIÓN ---------- */}
-      <section className="section" aria-labelledby="rep-title">
+      <section className="section section-tint" aria-labelledby="rep-title">
         <div className="section-head">
           <p className="eyebrow">Reputación</p>
           <h2 id="rep-title" className="title">
