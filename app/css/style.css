@@ -105,7 +105,7 @@ input:disabled,select:disabled{ opacity:.6; cursor:not-allowed; }
   color:#1A1A1A; border:0; border-radius:var(--radius-12);
   padding:12px 16px; font-weight:800; letter-spacing:.01em; cursor:pointer;
   box-shadow:var(--glow-gold); transition:transform .08s,filter .2s,box-shadow .25s;
-  width:100%;
+  width:auto;
 }
 .btn:hover{ filter:brightness(1.05); box-shadow:0 30px 80px rgba(255,199,0,.28),0 0 0 1px rgba(255,199,0,.22) inset; }
 .btn:active{ transform:translateY(1px); }
@@ -760,4 +760,270 @@ input:invalid:focus,select:invalid:focus{ border-color:var(--error); box-shadow:
 .card.stat .stat-value.is-word{
   font-size: clamp(22px, 2.6vw, 28px);
   letter-spacing: -.01em;
+}
+
+/* ============================================================
+   Alineación visual con sponsorship.com.ar
+   El producto usa pills (border-radius completo), superficies planas
+   y el dorado #FFD54F. Acá el blog venía con esquinas de 10-24px y
+   sombras con glow, que lo hacían leer como otro producto.
+   ============================================================ */
+
+/* --- Header --- */
+.site-nav{
+  background: rgba(24,24,24,.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: background .25s ease, border-color .25s ease;
+}
+.site-nav__inner{ min-height: 64px; }
+
+.site-nav__brand{
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 800; letter-spacing: .14em; font-size: 15px;
+}
+.site-nav__wordmark{ color: var(--fg); }
+.logo-mark{ display: block; flex: none; }
+.logo-arrow{ transition: transform .35s cubic-bezier(.22,1,.36,1); transform-origin: 32px 32px; }
+.logo-arrow--gold{ fill: var(--gold-400); }
+.logo-arrow--light{ fill: #8A8A8A; }
+.site-nav__brand:hover .logo-arrow--gold{ transform: translateX(2px); }
+.site-nav__brand:hover .logo-arrow--light{ transform: translateX(-2px); }
+
+/* Links del nav con subrayado que crece desde el centro */
+.site-nav__links a:not(.btn){
+  position: relative; padding-block: 6px;
+}
+.site-nav__links a:not(.btn)::after{
+  content: ""; position: absolute; left: 50%; bottom: 0;
+  width: 0; height: 2px; border-radius: 2px;
+  background: var(--gold-400);
+  transform: translateX(-50%);
+  transition: width .25s cubic-bezier(.22,1,.36,1);
+}
+.site-nav__links a:not(.btn):hover::after{ width: 100%; }
+
+/* --- Botones: pills, como en el producto --- */
+.btn, .btn-quiet, .chip, .share-btn, .btn-copy{ border-radius: 999px; }
+.btn{
+  background: linear-gradient(180deg, var(--gold-400), var(--gold-500));
+  border: 0;
+  box-shadow: 0 2px 12px rgba(255,199,0,.18);
+  transition: transform .18s cubic-bezier(.22,1,.36,1),
+              box-shadow .18s ease, filter .18s ease;
+}
+.btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,199,0,.3);
+  filter: brightness(1.05);
+}
+.btn:active{ transform: translateY(0); }
+.btn-quiet{
+  border: 1px solid var(--line);
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
+}
+.btn-quiet:hover{
+  border-color: rgba(255,213,79,.45);
+  background: rgba(255,213,79,.06);
+}
+
+/* --- Superficies: menos sombra, más borde --- */
+.card, .feature{
+  border-radius: 18px;
+  box-shadow: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), transparent 60%), var(--panel);
+}
+.card:hover, .feature:hover{
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+}
+.accordion details{ border-radius: 14px; }
+.cta-band{ border-radius: 28px; box-shadow: none; }
+
+/* --- Ritmo vertical consistente --- */
+.section{ padding-block: clamp(56px, 7vw, 88px); }
+.section + .section{ padding-top: 0; }
+.section-head{ margin-bottom: clamp(24px, 3vw, 36px); }
+.section-head .subtitle{ margin-top: 12px; }
+.eyebrow{ margin-bottom: 10px; }
+
+/* --- Aparición al hacer scroll --- */
+@media (prefers-reduced-motion: no-preference){
+  .reveal{
+    opacity: 0; transform: translateY(14px);
+    animation: reveal .6s cubic-bezier(.22,1,.36,1) forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 22%;
+  }
+}
+@keyframes reveal{ to{ opacity: 1; transform: none; } }
+
+/* ============================================================
+   Ritmo del artículo
+   Los bloques (.tldr, .prose, .dato-clave, .post-faq, .citation,
+   .share) traían cada uno su propio margen, así que la separación
+   entre secciones cambiaba según qué bloque venía después.
+   Acá se unifica: cada bloque aporta el mismo aire.
+   ============================================================ */
+.prose,
+.tldr,
+.dato-clave,
+.post-faq,
+.citation,
+.share,
+.post-related{
+  --stack-gap: clamp(32px, 4vw, 48px);
+  max-width: 72ch;
+  margin-inline: auto;
+}
+.tldr{ margin-top: clamp(20px, 2.5vw, 28px); margin-bottom: 0; }
+.prose{ margin-top: var(--stack-gap); }
+.dato-clave{ margin-block: var(--stack-gap); }
+.post-faq{ margin-top: var(--stack-gap); }
+.citation{ margin-top: var(--stack-gap); }
+.share{ margin-top: 20px; }
+
+/* El primer encabezado del cuerpo no necesita el margen de separación
+   que sí llevan los del medio: ya lo aporta el bloque anterior. */
+.prose > :first-child{ margin-top: 0; }
+.prose > :last-child{ margin-bottom: 0; }
+
+/* Relacionados y chips vuelven al ancho completo de la grilla */
+.post-related{ max-width: none; margin-top: clamp(44px, 5vw, 64px); }
+.chips{ max-width: 72ch; margin-inline: auto; }
+
+/* Encabezado del artículo */
+.post-byline{ margin-top: 12px; }
+
+/* Índice del blog: la grilla necesitaba aire entre filas */
+.grid.three, .grid.two{ row-gap: clamp(16px, 2vw, 24px); }
+
+/* --- Header: una sola fila, nunca wrap ---
+   El `flex-wrap` original tiraba el botón de registro a una segunda
+   línea a todo el ancho apenas el viewport se achicaba. */
+.site-nav__inner{
+  flex-wrap: nowrap;
+  gap: 20px;
+}
+.site-nav__brand{ flex: none; }
+.site-nav__links{
+  flex-wrap: nowrap;
+  gap: 22px;
+  margin-left: auto;
+}
+.site-nav__links a.btn{
+  flex: none;
+  white-space: nowrap;
+  padding: 9px 20px;
+  font-size: .88rem;
+}
+
+/* Debajo de 900px los links de sección se esconden: quedan el logo y el
+   registro, que es la acción que importa. Las secciones siguen accesibles
+   desde el índice de la home y el pie. */
+@media (max-width: 900px){
+  .site-nav__links a:not(.btn){ display: none; }
+}
+@media (max-width: 640px){
+  .site-nav__inner{ justify-content: space-between; gap: 12px; }
+  .site-nav__links{ justify-content: flex-end; }
+  .site-nav__wordmark{ font-size: 13px; letter-spacing: .1em; }
+}
+/* Muy angosto: sólo el isotipo, para que el botón nunca se comprima */
+@media (max-width: 380px){
+  .site-nav__wordmark{ display: none; }
+}
+
+/* Los botones vuelven a ancho de contenido por defecto (antes .btn traía
+   width:100%, que reventaba cualquier botón dentro de un flex con flex:none).
+   Full-width sólo donde el bloque lo pide. */
+.form-card .btn,
+.card .btn,
+.cta-band .btn{ width: 100%; }
+@media (min-width: 640px){
+  .card .btn{ width: auto; }
+}
+
+/* ============================================================
+   Columna de lectura única para el artículo
+   Antes cada bloque calculaba su propio ancho con `ch`, que depende
+   del font-size de cada elemento: el header, el TL;DR y el cuerpo
+   terminaban en tres ejes distintos. Un ancho en px los alinea a todos.
+   ============================================================ */
+:root{ --read-col: 760px; }
+
+.post-page .section-head,
+.post-page .breadcrumbs,
+.prose,
+.tldr,
+.dato-clave,
+.post-faq,
+.citation,
+.share,
+.post-page .chips,
+.post-page .back-link{
+  width: min(100%, var(--read-col));
+  max-width: none;
+  margin-inline: auto;
+}
+
+/* Los encabezados del cuerpo son enlaces por el autolink de anclas.
+   Deben leerse como encabezados, no como links dorados subrayados. */
+.prose :is(h2,h3,h4) > a:not(.chip):not(.btn):not(.btn-quiet){
+  color: inherit;
+  text-decoration: none;
+}
+.prose :is(h2,h3,h4) > a:not(.chip):not(.btn):not(.btn-quiet):hover{
+  color: var(--accent-300);
+  text-decoration: none;
+}
+/* Ancla visible sólo al pasar por encima del encabezado */
+.prose :is(h2,h3) > a::after{
+  content: "#";
+  margin-left: .4em;
+  color: var(--accent);
+  opacity: 0;
+  font-weight: 600;
+  transition: opacity .18s ease;
+}
+.prose :is(h2,h3):hover > a::after{ opacity: .55; }
+
+/* Los relacionados usan la grilla completa, no la columna de lectura */
+.post-related{ width: auto; max-width: none; }
+
+/* Acciones del CTA: lado a lado en desktop, apiladas en mobile.
+   El ancho completo heredado hacía que dos botones se vieran como un bloque. */
+.cta-actions{
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center; margin-top: 18px;
+}
+.cta-band .cta-actions .btn,
+.cta-band .cta-actions .btn-quiet{ width: auto; }
+.cta-actions .btn-quiet{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 22px; text-decoration: none;
+}
+@media (max-width: 520px){
+  .cta-actions{ flex-direction: column; }
+  .cta-band .cta-actions .btn,
+  .cta-band .cta-actions .btn-quiet{ width: 100%; }
+}
+
+/* --- Botones: sin subrayado y sin glow exagerado --- */
+a.btn, a.btn-quiet{ text-decoration: none; }
+.btn{ box-shadow: 0 2px 14px rgba(255,199,0,.16); }
+.btn:hover{ box-shadow: 0 8px 26px rgba(255,199,0,.26); }
+.btn-lg{ padding: 14px 26px; font-size: 1rem; }
+
+/* Acciones del hero: en fila cuando entra, apiladas a ancho completo
+   en mobile. Antes el texto del botón se partía en tres líneas. */
+.row{ display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.row .btn, .row .btn-quiet{ white-space: nowrap; }
+.btn-quiet{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 13px 22px;
+}
+@media (max-width: 560px){
+  .row{ flex-direction: column; align-items: stretch; }
+  .row .btn, .row .btn-quiet{ width: 100%; white-space: normal; }
 }

@@ -113,7 +113,7 @@ const jsonLd = {
       name: "Sponsorship",
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
-      url: "https://www.sponsorship.com.ar/",
+      url: "https://sponsorship.com.ar/",
       offers: {
         "@type": "Offer",
         price: "0",
@@ -169,7 +169,7 @@ export default function Home() {
           <UserCounter />
         </div>
 
-        <div className="grid three fade-in" style={{ marginTop: 24 }}>
+        <div className="grid three reveal" style={{ marginTop: 24 }}>
           <article className="card stat">
             <span className="stat-value">$0</span>
             <span className="stat-label">
@@ -200,7 +200,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="steps">
+        <div className="steps reveal">
           <ol>
             <li>
               <strong>Explorás y negociás.</strong> Filtrás perfiles por rubro,
@@ -240,7 +240,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid two">
+        <div className="grid two reveal">
           <article className="card">
             <h3>Para marcas</h3>
             <ul className="bullets">
@@ -294,7 +294,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid three">
+        <div className="grid three reveal">
           <article className="card">
             <h3>Pago único</h3>
             <p className="muted">
@@ -334,7 +334,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid three">
+        <div className="grid three reveal">
           <article className="feature">
             <h3>Calificación de las dos partes</h3>
             <p className="muted">
@@ -396,7 +396,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid three">
+        <div className="grid three reveal">
           <article className="feature">
             <h3>
               <Link href="/blog/como-empezar-en-sponsorship">Cómo empezar</Link>

@@ -2,7 +2,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://sponsorship.blog";
 
 /** URL de la app (registro / login), distinta del sitio público. */
-export const APP_URL = "https://www.sponsorship.com.ar";
+export const APP_URL = "https://sponsorship.com.ar";
 export const REGISTER_URL = `${APP_URL}/auth/register`;
 
 /** Convierte una ruta relativa en absoluta contra SITE_URL. */

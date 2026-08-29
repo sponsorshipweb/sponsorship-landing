@@ -66,7 +66,7 @@ export default function BlogCTA({
         <a className="btn btn-primary" href={conf.href}>
           Crear cuenta
         </a>
-        <a className="btn btn-quiet" href="/blog">
+        <a className="btn-quiet" href="/blog">
           Ver más artículos
         </a>
       </div>

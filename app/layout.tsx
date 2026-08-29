@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
+import Logo from "@/components/Logo";
 import { SITE_URL, REGISTER_URL } from "@/utils/seo";
 import "@/app/css/style.css";
 
@@ -64,8 +65,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         <header className="site-nav">
           <div className="container site-nav__inner">
-            <Link href="/" className="site-nav__brand">
-              <span aria-hidden="true">◆</span> SPONSORSHIP
+            <Link href="/" className="site-nav__brand" aria-label="Sponsorship — inicio">
+              <Logo size={30} />
+              <span className="site-nav__wordmark">SPONSORSHIP</span>
             </Link>
             <nav aria-label="Principal" className="site-nav__links">
               <Link href="/#como-funciona">Cómo funciona</Link>

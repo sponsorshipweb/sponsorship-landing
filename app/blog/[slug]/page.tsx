@@ -97,7 +97,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const jsonLd = { "@context": "https://schema.org", "@graph": graph };
 
   return (
-    <main className="container section" role="main">
+    <main className="container section post-page" role="main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -155,7 +155,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       <ShareButtons title={post.title} url={absolute} />
 
       {post.tags?.length > 0 && (
-        <div className="chips" style={{ marginTop: 24 }}>
+        <div className="chips" style={{ marginTop: 28 }}>
           {post.tags.map((t) => (
             <Link key={t} className="chip" href={`/blog/tag/${encodeURIComponent(t)}`}>
               #{t}
@@ -165,7 +165,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       )}
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" style={{ marginTop: 44 }}>
+        <section className="post-related" aria-labelledby="related-title">
           <h2 id="related-title" className="eyebrow" style={{ marginBottom: 14 }}>
             Seguí leyendo{post.pillar ? ` · ${pillarLabel}` : ""}
           </h2>

@@ -30,8 +30,8 @@
 
 ## Links principales
 
-- Producto: https://www.sponsorship.com.ar
-- Registro: https://www.sponsorship.com.ar/auth/register
+- Producto: https://sponsorship.com.ar
+- Registro: https://sponsorship.com.ar/auth/register
 - Blog: /blog
 
 ## Pilares del blog
